@@ -2,9 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
-const connectDB = require('./db');
-
-connectDB();
+require('./db');
 
 const app = express();
 
