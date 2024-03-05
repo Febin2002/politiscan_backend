@@ -2,11 +2,21 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
-require('./db');
+const mongoose = require('mongoose');
 
 const app = express();
 
 app.use(express.json());
+const mongourl="mongodb+srv://febinjohn725:VPoWCbifmCaOoW9R@cluster0.psavxgy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+mongoose.connect(mongourl, {
+    useNewUrlParser: true,
+}).then(() => {
+    console.log("connected")
+})
+    .catch((e) => {
+        console.log(e)
+    })
+
 
 const User = require('./Schema/voter');
 const User2 = require('./Schema/Admin');
