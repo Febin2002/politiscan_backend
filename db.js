@@ -5,7 +5,7 @@ const Admin = require('./Schema/Admin');
 const Voter = require('./Schema/voter');
 const Project  = require('./Schema/project');
 
-const uri = "mongodb+srv://febinjohn725:<VPoWCbifmCaOoW9R>@cluster0.psavxgy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = "mongodb+srv://febinjohn725:VPoWCbifmCaOoW9R@cluster0.psavxgy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
