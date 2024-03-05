@@ -20,6 +20,8 @@ mongoose.connect(mongourl, {
 
 const User = require('./Schema/voter');
 const User2 = require('./Schema/Admin');
+
+
 // Secret key for JWT
 const secretKey = crypto.randomBytes(32).toString('hex');
 console.log(secretKey);
