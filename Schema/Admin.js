@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const adminSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  phoneNumber: { type: String, required: true },
-  emailAddress: { type: String, required: true },
+  mobileNumber: { type: String, required: true },
+  email: { type: String, required: true },
   constituency: { type: String, required: true }, 
-  verificationId: { type: String, required: true },
+  adminId: { type: String, required: true },
   address: { type: String, required: true },
   gender: { type: String, enum: ['Male', 'Female', 'Other'], required: true },
   dateOfBirth: { type: Date, required: true },

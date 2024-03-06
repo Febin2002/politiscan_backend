@@ -88,6 +88,58 @@ app.get('/protected', verifyToken, (req, res) => {
   res.json({ message: 'You are authorized!' });
 });
 
+app.post('/signup', [
+    check('name').notEmpty(),
+    check('age').notEmpty(),
+    check('gender').notEmpty(),
+    check('district').notEmpty(),
+    check('constituency').notEmpty(),
+    check('mobileNumber').notEmpty(),
+    check('aadharNo').notEmpty(),
+    check('email').isEmail(),
+    check('password').isLength({ min: 8 }),
+], async (req, res) => {
+    try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const { name, age, gender, district, constituency, mobileNumber, aadharNo, email, password } = req.body;
+
+        // Check if user with same email exists
+        let user = await User.findOne({ email });
+        if (user) {
+            return res.status(400).json({ message: 'User already exists with this email' });
+        }
+
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create new user
+            user = new User({
+                name,
+                age,
+                gender,
+                district,
+                constituency,
+                mobileNumber,
+                aadharNo,
+                email,
+                password: hashedPassword,
+            });
+        // Save user to database
+        await user.save();
+
+        // Here, you can send the verification screen URL or some identifier in the response
+        // For demonstration purposes, let's assume the verification screen URL is '/verification'
+        res.status(200).json({ message: 'User signed up successfully', verificationURL: '/verification' });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

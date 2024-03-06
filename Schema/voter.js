@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const voterSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  phoneNumber: { type: String, required: true },
-  emailAddress: { type: String, required: true },
+  mobileNumber: { type: String, required: true },
+  email: { type: String, required: true },
   govIdType: { type: String, enum:['Aadhaar','Voter_id','Driving_license'],required: true },
   govId: { type: String, required: true },
   constituency: { type: String, required: true },
