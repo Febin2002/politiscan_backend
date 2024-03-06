@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const mongoose = require('mongoose');
+const { check } = require('express-validator');
+
 
 const app = express();
 
@@ -20,7 +22,7 @@ mongoose.connect(mongourl, {
 
 const User = require('./Schema/voter');
 const User2 = require('./Schema/Admin');
-
+const project = require('./Schema/project');
 
 // Secret key for JWT
 const secretKey = crypto.randomBytes(32).toString('hex');
@@ -137,6 +139,32 @@ app.post('/signup', [
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
+    }
+});
+
+app.post('/projectadd', async (req, res) => {
+    try {
+        // Extracting data from the request body
+        const { constituency, projectId, projectName, projectType, totalBudget, projectDescription } = req.body.info;
+
+        // Create a new project document
+        const newProject = new project({
+            constituency,
+            projectId,
+            projectName,
+            projectType,
+            totalBudget,
+            projectDescription
+        });
+
+        // Save the new project to the database
+        await newProject.save();
+
+        // Respond with success message
+        return res.status(201).json({ message: 'Project created successfully' });
+    } catch (error) {
+        console.error('Error:', error);
+        return res.status(500).json({ error: 'Server error' });
     }
 });
 
